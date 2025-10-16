@@ -41,11 +41,16 @@ services:
     restart: unless-stopped
     volumes:
       - ./alertmanager/:/etc/alertmanager/
+      - ./alertmanager/entrypoint.sh:/entrypoint.sh
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
     expose:
       - 9093
+    environment:
+      ALERTMANAGER_DEFAULT_WEBHOOK_PORT: "${ALERTMANAGER_DEFAULT_WEBHOOK_PORT:-3001}"
+      DISCORD_WEBHOOK_URL: "${DISCORD_WEBHOOK_URL:-}"
+    entrypoint: ["/entrypoint.sh"]
       
   node-exporter:
     image: prom/node-exporter:latest
