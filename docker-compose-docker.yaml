@@ -48,8 +48,8 @@ services:
       - ./alertmanager/:/etc/alertmanager/
       - ./alertmanager/entrypoint.sh:/entrypoint.sh
     command:
-      - '--config.file=/etc/alertmanager/config.yml'
-      - '--storage.path=/alertmanager'
+      - '--web.listen-address=:${ALERTMANAGER_PORT:-9093}'
+      - '--cluster.listen-address='
     expose:
       - 9093
     environment:
